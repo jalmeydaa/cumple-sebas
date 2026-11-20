@@ -60,6 +60,7 @@
   .cerdo-lado{position:absolute;width:24%;bottom:-6%;animation:saltito 2.4s ease-in-out infinite;cursor:pointer}
   .cerdo-lado.izq{left:2%}
   .cerdo-lado.der{right:2%;animation-delay:-1.2s}
+  .cerdo-lado.der img{transform:rotate(20deg)} /* giro horario; va en la imagen para no chocar con el saltito */
   /* imágenes editables: caja fija (proporción 200x254); la imagen se ajusta sin deformarse */
   .cerdo-lado img,.cerdo-centro img{display:block;width:100%;aspect-ratio:200/254;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
   @keyframes saltito{50%{transform:translateY(-6px)}}
@@ -117,9 +118,17 @@
   .direccion a{color:var(--azul);font-weight:700}
 
   /* ---------- pasto + cerdito central ---------- */
-  .pasto-zona{position:relative;margin-top:6px}
+  .pasto-zona{position:relative;margin-top:52px}
   .pasto-zona svg.colinas{width:100%;height:auto;display:block}
-  .cerdo-centro{position:absolute;left:50%;bottom:6%;width:38%;margin-left:-19%;cursor:pointer;animation:saltito 2.2s ease-in-out infinite}
+  .cerdo-centro{position:absolute;left:50%;bottom:-50%;width:80%;margin-left:-40%;cursor:pointer;animation:saltito 2.2s ease-in-out infinite}
+  /* aviso de toque: manito con onda que se expande (desaparece al primer toque) */
+  .tocame{position:absolute;left:20%;top:55%;z-index:3;width:30px;height:30px;border-radius:50%;
+    background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:.95rem;
+    animation:toque 1.6s ease-in-out infinite;transition:opacity .3s}
+  .tocame::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #fff;animation:onda 1.6s ease-out infinite}
+  @keyframes toque{50%{transform:translateY(3px)}}
+  @keyframes onda{from{transform:scale(1);opacity:.9}to{transform:scale(2.2);opacity:0}}
+  .tocado .tocame{opacity:0;pointer-events:none}
   .burbuja{
     position:absolute;left:64%;top:6%;z-index:3;
     background:#fff;color:var(--azul-osc);font-weight:700;font-size:.85rem;
@@ -280,7 +289,7 @@
       <g fill="#fff"><circle cx="70" cy="174" r="3"/><circle cx="355" cy="166" r="3"/></g>
     </svg>
     <div class="burbuja" id="burbuja">¡Hmpf! ¡No faltes!</div>
-    <div class="cerdo-centro" data-cerdo><img id="imgCentro" src="img/cerdito-centro.svg" alt="Cerdito"></div>
+    <div class="cerdo-centro" data-cerdo><div class="tocame" aria-label="Toca al cerdito">👆</div><img id="imgCentro" src="img/cerdito-centro.svg" alt="Cerdito"></div>
   </div>
 
   <!-- ===== CONFIRMACIÓN ===== -->
@@ -289,7 +298,7 @@
 
     <form class="rsvp" id="form" novalidate>
       <h2>¡Confirma tu asistencia!</h2>
-      <p class="sub">Invitación personal · déjanos tu nombre y DNI 🎈</p>
+      <p class="sub">Déjanos tu nombre y DNI 🎈</p>
 
       <div id="invitados"></div>
     
@@ -301,7 +310,7 @@
       <div class="gracias" id="gracias">¡Gracias! 🐷 Solo falta que presiones <b>Enviar</b> en WhatsApp.</div>
     </form>
 
-    <p class="firma" id="firma">Con cariño, la familia de Sebas 💙</p>
+    <p class="firma" id="firma">Con cariño, la Familia del Gran Sebas 💙</p>
   </div>
 </div>
 
@@ -324,9 +333,9 @@ const FIESTA = {
   // IMÁGENES — sube tus archivos a la carpeta img/ y pon aquí su nombre
   // (sirve .png, .jpg, .webp, .gif o .svg; mejor con fondo transparente)
   imagenes: {
-    izquierda: "img/cerdito-izq.svg",     // arriba a la izquierda
-    derecha:   "img/cerdito-der.svg",     // arriba a la derecha
-    centro:    "img/cerdito-centro.svg",  // abajo, sobre el pasto
+    izquierda: "img/cerdito-izq.png",     // arriba a la izquierda
+    derecha:   "img/cerdito-der.png",     // arriba a la derecha
+    centro:    "img/cerdito-centro.png",  // abajo, sobre el pasto
   },
 };
 /* ========================================================= */
@@ -342,7 +351,7 @@ $('#lugar').textContent = '📍 ' + FIESTA.lugar;
 $('#imgIzq').src = FIESTA.imagenes.izquierda;
 $('#imgDer').src = FIESTA.imagenes.derecha;
 $('#imgCentro').src = FIESTA.imagenes.centro;
-$('#firma').textContent = 'Con cariño, la familia de ' + FIESTA.nino + ' 💙';
+$('#firma').textContent = 'Con cariño, la Familia del Gran ' + FIESTA.nino + ' 💙';
 if (FIESTA.mapaURL) {
   const a = document.createElement('a');
   a.href = FIESTA.mapaURL; a.target = '_blank'; a.rel = 'noopener';
@@ -373,7 +382,7 @@ const frases = ['¡Hmpf! ¡No faltes!', '¡Grrr! ¡Confirma ya!', '¡Oink! ¡Qui
 let fi = 0;
 function berrinche(el) { el.classList.remove('enojado'); void el.offsetWidth; el.classList.add('enojado'); setTimeout(() => el.classList.remove('enojado'), 1300); }
 document.querySelectorAll('[data-cerdo]').forEach(el => el.addEventListener('click', () => {
-  berrinche(el); fi = (fi + 1) % frases.length; $('#burbuja').textContent = frases[fi];
+  berrinche(el); document.body.classList.add('tocado'); fi = (fi + 1) % frases.length; $('#burbuja').textContent = frases[fi];
 }));
 
 /* ---------- cuenta regresiva ---------- */
