@@ -220,6 +220,7 @@
   .portada button{margin-top:14px;font-family:'Lilita One',sans-serif;font-size:1.25rem;color:#fff;background:var(--azul);border:none;
     border-radius:999px;padding:14px 28px;box-shadow:0 6px 16px rgba(30,123,224,.35);cursor:pointer;animation:pulso 1.4s ease-in-out infinite}
   @keyframes pulso{50%{transform:scale(1.06)}}
+  .portada .p-volumen{margin-top:10px;font-size:.85rem;font-weight:600;color:#3f4d6e;opacity:.85}
   body.bloqueado{overflow:hidden}
   /* botón pequeño para pausar la música */
   .btn-musica{position:fixed;right:14px;bottom:14px;z-index:11;width:42px;height:42px;border:none;border-radius:50%;
@@ -249,6 +250,7 @@
   <div class="p-sub">¡Tienes una invitación!</div>
   <div class="p-nombre">Owen Sebastián</div>
   <button type="button">🎁 Toca para abrir</button>
+  <div class="p-volumen">🔊 Sube el volumen, ¡tiene música!</div>
 </div>
 <audio id="musica" src="musica.m4a" preload="auto"></audio>
 <button class="btn-musica" id="btnMusica" type="button" aria-label="Pausar o reanudar música" hidden>🎵</button>
