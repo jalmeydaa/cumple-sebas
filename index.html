@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¡Sebas cumple 1 añito!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Dancing+Script:wght@700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     COLORES — cámbialos aquí para modificar el diseño
+     ========================================================= */
+  :root{
+    --cielo-arriba:#8fd0f7;
+    --cielo-abajo:#cdeeff;
+    --azul:#1e7be0;        /* "1", nombre */
+    --azul-osc:#173a7a;    /* textos fecha/hora */
+    --verde:#3fae2a;       /* números fecha/hora */
+    --verde-osc:#2a7f1b;
+    --pasto:#6cc24a;
+    --pasto-osc:#4ea832;
+    --rojo:#e8242c;
+    --amarillo:#ffd21f;
+    --celeste:#2fb6ef;
+    --rosa:#f6a5b4;
+    --blanco:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Fredoka',system-ui,sans-serif;
+    color:var(--azul-osc);
+    background:#e9f6ff;
+    min-height:100vh;
+  }
+
+  /* ---------- marco tipo celular ---------- */
+  .inv{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
+    overflow:hidden;
+    background:linear-gradient(180deg,var(--cielo-arriba) 0%,var(--cielo-abajo) 70%);
+  }
+  @media (min-width:600px){
+    body{padding:28px 0;background:linear-gradient(180deg,#bfe6ff,#e9f6ff)}
+    .inv{border-radius:34px;box-shadow:0 0 0 10px #fff,0 30px 60px rgba(23,58,122,.25)}
+  }
+
+  /* ---------- escena superior ---------- */
+  .escena{position:relative;width:100%;display:block}
+  .escena svg{width:100%;height:auto;display:block}
+  .sol{animation:girar 30s linear infinite;transform-origin:62px 66px}
+  @keyframes girar{to{transform:rotate(360deg)}}
+  .nube-mov{animation:vaiven 6s ease-in-out infinite}
+  .nube-mov.b{animation-delay:-3s}
+  @keyframes vaiven{50%{transform:translateX(8px)}}
+  .uno-txt{font-family:'Lilita One',sans-serif}
+
+  .cerdo-lado{position:absolute;width:24%;bottom:-6%;animation:saltito 2.4s ease-in-out infinite;cursor:pointer}
+  .cerdo-lado.izq{left:2%}
+  .cerdo-lado.der{right:2%;animation-delay:-1.2s}
+  /* imágenes editables: caja fija (proporción 200x254); la imagen se ajusta sin deformarse */
+  .cerdo-lado img,.cerdo-centro img{display:block;width:100%;aspect-ratio:200/254;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
+  @keyframes saltito{50%{transform:translateY(-6px)}}
+  .cerdo-lado.enojado,.cerdo-centro.enojado{animation:berrinche .4s ease-in-out 3}
+  @keyframes berrinche{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+
+  /* ---------- nombre y texto ---------- */
+  .nombre{
+    font-family:'Dancing Script',cursive;
+    font-size:4.4rem;line-height:1;
+    color:var(--azul);
+    text-align:center;
+    margin-top:4px;
+    text-shadow:3px 3px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff;
+    position:relative;z-index:2;
+  }
+  .texto{
+    text-align:center;color:#fff;font-weight:600;font-size:1.12rem;line-height:1.3;
+    margin:10px 70px 0;
+    text-shadow:0 2px 3px rgba(23,58,122,.45);
+    position:relative;z-index:2;
+  }
+
+  /* ---------- fecha y hora (estilo ref. 2) ---------- */
+  .fecha-zona{position:relative;padding:14px 0 6px}
+  .globos{position:absolute;top:-18px;width:76px;z-index:1;animation:flotar 4s ease-in-out infinite}
+  .globos.izq{left:-6px}
+  .globos.der{right:-6px;animation-delay:-2s}
+  @keyframes flotar{50%{transform:translateY(-8px) rotate(2deg)}}
+  .fecha-hora{
+    position:relative;z-index:2;
+    margin:0 76px;
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    border-top:2.5px solid var(--azul-osc);border-bottom:2.5px solid var(--azul-osc);
+    padding:8px 0;
+    background:rgba(255,255,255,.55);
+    border-radius:4px;
+  }
+  .fh{text-align:center;font-family:'Lilita One',sans-serif;color:var(--azul-osc);line-height:1}
+  .fh .et{font-size:1rem;letter-spacing:.04em}
+  .fh .grande{
+    font-size:3.1rem;color:var(--verde);margin:2px 0;
+    text-shadow:2px 3px 0 var(--verde-osc);
+    -webkit-text-stroke:1px var(--verde-osc);
+  }
+  .fh .grande.hora{font-size:2.5rem;margin:8px 0 6px}
+  .divisor{position:relative;height:100%;display:flex;align-items:center;justify-content:center;width:34px}
+  .divisor::before{content:"";position:absolute;top:2px;bottom:2px;left:50%;width:2.5px;background:var(--azul-osc);transform:translateX(-50%)}
+  .divisor span{position:relative;font-size:1.5rem;background:#e6f5ff;border-radius:50%;line-height:1;padding:2px}
+
+  .direccion{
+    text-align:center;font-weight:600;font-size:1.02rem;color:var(--azul-osc);
+    margin:12px 64px 0;line-height:1.3;position:relative;z-index:2;
+  }
+  .direccion a{color:var(--azul);font-weight:700}
+
+  /* ---------- pasto + cerdito central ---------- */
+  .pasto-zona{position:relative;margin-top:6px}
+  .pasto-zona svg.colinas{width:100%;height:auto;display:block}
+  .cerdo-centro{position:absolute;left:50%;bottom:6%;width:38%;margin-left:-19%;cursor:pointer;animation:saltito 2.2s ease-in-out infinite}
+  .burbuja{
+    position:absolute;left:64%;top:6%;z-index:3;
+    background:#fff;color:var(--azul-osc);font-weight:700;font-size:.85rem;
+    padding:6px 10px;border-radius:14px;box-shadow:0 3px 0 rgba(23,58,122,.15);
+    max-width:125px;line-height:1.15;
+  }
+  .burbuja::after{content:"";position:absolute;left:10px;bottom:-8px;border:8px solid transparent;border-top-color:#fff;border-bottom:0}
+
+  /* ---------- confirmación (sobre el pasto) ---------- */
+  .rsvp-zona{background:linear-gradient(180deg,var(--pasto) 0%,var(--pasto-osc) 100%);padding:0 16px 26px}
+  .cuenta{display:flex;justify-content:center;gap:7px;padding:4px 0 16px}
+  .cuenta div{background:#fff;border-radius:14px;min-width:62px;padding:7px 4px;text-align:center;box-shadow:0 4px 0 var(--verde-osc)}
+  .cuenta b{display:block;font-family:'Lilita One';font-size:1.6rem;line-height:1;color:var(--azul)}
+  .cuenta span{font-size:.7rem;text-transform:uppercase;font-weight:700;color:var(--azul-osc)}
+  .cuenta-hoy{text-align:center;font-family:'Lilita One';font-size:1.5rem;color:#fff;padding:4px 0 14px;text-shadow:0 2px 0 var(--verde-osc)}
+
+  .rsvp{background:#fff;border-radius:24px;padding:18px 16px 20px;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+  .rsvp h2{font-family:'Lilita One',sans-serif;font-weight:400;text-align:center;font-size:1.9rem;line-height:1.05;color:var(--azul-osc)}
+  .rsvp .sub{text-align:center;font-size:.95rem;color:#5b6b8f;margin:4px 0 12px}
+  .invitado{background:#f3faff;border-radius:16px;padding:4px 12px 12px;margin-bottom:14px!important;border:2px solid #d4ecff;margin-bottom:10px;position:relative}
+  .invitado .num{font-weight:700;color:var(--azul);font-size:.9rem}
+  .quitar{position:absolute;top:8px;right:10px;border:none;background:#ffe1e3;color:var(--rojo);font-weight:800;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:1rem}
+  label{display:block;font-weight:600;font-size:.9rem;margin:8px 0 4px}
+  input{width:100%;font:inherit;font-size:1rem;padding:12px 14px;border-radius:14px;border:2px solid #cfe3f5;background:#fff;outline:none}
+  input:focus{border-color:var(--azul)}
+  input.error{border-color:var(--rojo);background:#fff3f3}
+  .msg-error{color:var(--rojo);font-size:.82rem;font-weight:600;margin-top:3px}
+  .agregar{display:block;width:100%;border:2px dashed var(--azul);background:transparent;color:var(--azul);font:inherit;font-weight:700;padding:10px;border-radius:14px;cursor:pointer;margin:2px 0 14px}
+  .btn-wsp{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;background:#25d366;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.3rem;padding:14px;border-radius:18px;box-shadow:0 6px 0 #179c4a}
+  .btn-wsp:active{transform:translateY(4px);box-shadow:0 2px 0 #179c4a}
+  .btn-wsp svg{width:26px;height:26px}
+  .nota{font-size:.8rem;color:#5b6b8f;text-align:center;margin-top:10px;line-height:1.4}
+  .nota .tel{display:block;font-family:'Lilita One',sans-serif;font-size:1.35rem;color:var(--azul-osc);margin:4px 0 6px;letter-spacing:.03em}
+  .gracias{display:none;text-align:center;margin-top:12px;background:#eafff1;border-radius:16px;padding:12px;font-weight:600;color:#178a43}
+  .gracias.ver{display:block}
+  .firma{text-align:center;color:#fff;font-weight:700;margin-top:18px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+
+  .confeti{position:fixed;top:-12px;width:10px;height:14px;z-index:9;pointer-events:none;animation:caer linear forwards}
+  @keyframes caer{to{transform:translateY(110vh) rotate(720deg)}}
+
+  @media (max-width:370px){
+    .nombre{font-size:3.7rem}
+    .texto{margin:10px 56px 0;font-size:1rem}
+    .fecha-hora{margin:0 60px}
+    .fh .grande{font-size:2.6rem}.fh .grande.hora{font-size:2.1rem}
+    .globos{width:62px}
+    .direccion{margin:12px 52px 0}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== Dibujos reutilizables (globos) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+
+    <!-- Racimo de 3 globos -->
+    <symbol id="racimo" viewBox="0 0 100 230">
+      <path d="M30 92 Q40 150 50 225 M70 92 Q58 150 50 225 M50 112 Q46 170 50 225" stroke="#33415c" stroke-width="1.6" fill="none"/>
+      <ellipse cx="30" cy="52" rx="27" ry="34" fill="#ffd21f"/>
+      <path d="M26 86 l4 -3 l4 3z" fill="#e2b400"/>
+      <ellipse cx="70" cy="58" rx="27" ry="34" fill="#2fb6ef"/>
+      <path d="M66 92 l4 -3 l4 3z" fill="#1d93c7"/>
+      <ellipse cx="48" cy="80" rx="27" ry="34" fill="#e8242c"/>
+      <path d="M44 114 l4 -3 l4 3z" fill="#b8121a"/>
+      <ellipse cx="20" cy="38" rx="6" ry="10" fill="#fff" opacity=".6"/>
+      <ellipse cx="60" cy="44" rx="6" ry="10" fill="#fff" opacity=".6"/>
+      <ellipse cx="38" cy="66" rx="6" ry="10" fill="#fff" opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="inv">
+
+  <!-- ===== ESCENA: sol, arcoíris, nubes, "1 AÑITO" ===== -->
+  <div class="escena">
+    <svg viewBox="0 0 420 330" aria-label="Arcoíris con sol y nubes">
+      <!-- arcoíris -->
+      <g fill="none" stroke-width="15">
+        <path d="M18 300 A192 192 0 0 1 402 300" stroke="#e8242c"/>
+        <path d="M33 300 A177 177 0 0 1 387 300" stroke="#ff8a1f"/>
+        <path d="M48 300 A162 162 0 0 1 372 300" stroke="#ffd21f"/>
+        <path d="M63 300 A147 147 0 0 1 357 300" stroke="#5fc63a"/>
+        <path d="M78 300 A132 132 0 0 1 342 300" stroke="#22c4c4"/>
+        <path d="M93 300 A117 117 0 0 1 327 300" stroke="#2f78e8"/>
+        <path d="M108 300 A102 102 0 0 1 312 300" stroke="#8b4fe0"/>
+      </g>
+
+      <!-- sol -->
+      <g class="sol">
+        <g fill="#ffcf1f">
+          <polygon points="62,10 70,32 54,32"/><polygon points="62,122 70,100 54,100"/>
+          <polygon points="6,66 28,58 28,74"/><polygon points="118,66 96,58 96,74"/>
+          <polygon points="22,26 40,40 30,48"/><polygon points="102,106 84,92 94,84"/>
+          <polygon points="102,26 94,48 84,40"/><polygon points="22,106 30,84 40,92"/>
+        </g>
+      </g>
+      <circle cx="62" cy="66" r="34" fill="#ffe14a" stroke="#f2b705" stroke-width="3"/>
+      <path d="M48 62 q4 -5 8 0 M68 62 q4 -5 8 0" stroke="#7a4a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M50 74 q12 14 24 0 z" fill="#c2410c"/>
+      <circle cx="44" cy="74" r="5" fill="#ffa3a3" opacity=".8"/><circle cx="80" cy="74" r="5" fill="#ffa3a3" opacity=".8"/>
+
+      <!-- nubes del cielo -->
+      <g class="nube-mov" fill="#fff" stroke="#bfe3ff" stroke-width="2">
+        <path d="M150 62 q0 -22 22 -22 q8 -18 30 -10 q14 -12 30 2 q20 0 20 22 q0 14 -14 14 h-76 q-12 0 -12 -6z"/>
+      </g>
+      <g class="nube-mov b" fill="#fff" stroke="#bfe3ff" stroke-width="2">
+        <path d="M300 54 q0 -18 18 -18 q8 -16 28 -8 q12 -8 24 4 q22 0 22 20 q0 12 -12 12 h-68 q-12 0 -12 -10z"/>
+      </g>
+
+      <!-- "1 AÑITO" -->
+      <text x="172" y="292" class="uno-txt" font-size="135" fill="#1e7be0" stroke="#fff" stroke-width="5" paint-order="stroke" text-anchor="middle">1</text>
+      <text x="210" y="258" class="uno-txt" font-size="27" fill="#1e7be0" stroke="#fff" stroke-width="3" paint-order="stroke">AÑITO</text>
+
+      <!-- nubes donde termina el arcoíris -->
+      <g fill="#fff">
+        <circle cx="20" cy="296" r="30"/><circle cx="55" cy="285" r="34"/><circle cx="92" cy="300" r="26"/><rect x="-10" y="296" width="120" height="34" rx="16"/>
+        <circle cx="328" cy="300" r="26"/><circle cx="365" cy="285" r="34"/><circle cx="400" cy="296" r="30"/><rect x="310" y="296" width="120" height="34" rx="16"/>
+      </g>
+    </svg>
+    <div class="cerdo-lado izq" data-cerdo><img id="imgIzq" src="img/cerdito-izq.svg" alt="Cerdito"></div>
+    <div class="cerdo-lado der" data-cerdo><img id="imgDer" src="img/cerdito-der.svg" alt="Cerdito"></div>
+  </div>
+
+  <!-- ===== NOMBRE Y TEXTO ===== -->
+  <h1 class="nombre" id="nombreNino">Sebas</h1>
+  <p class="texto" id="mensaje">Acompaña a mis papitos y a mí a celebrar mi primer añito el día:</p>
+
+  <!-- ===== FECHA Y HORA ===== -->
+  <div class="fecha-zona">
+    <svg class="globos izq" viewBox="0 0 100 230"><use href="#racimo"/></svg>
+    <svg class="globos der" viewBox="0 0 100 230" style="transform:scaleX(-1)"><use href="#racimo"/></svg>
+
+    <div class="fecha-hora">
+      <div class="fh">
+        <div class="et" id="dia">SÁBADO</div>
+        <div class="grande" id="numDia">19</div>
+        <div class="et" id="mes">DICIEMBRE</div>
+      </div>
+      <div class="divisor"><span>⭐</span></div>
+      <div class="fh">
+        <div class="et">HORA</div>
+        <div class="grande hora" id="hora">--:--</div>
+        <div class="et" id="ampm">POR CONFIRMAR</div>
+      </div>
+    </div>
+
+    <p class="direccion"><span id="lugar"></span><br><span id="mapa"></span></p>
+  </div>
+
+  <!-- ===== PASTO + CERDITO ===== -->
+  <div class="pasto-zona">
+    <svg class="colinas" viewBox="0 0 420 190" aria-hidden="true">
+      <path d="M0 110 Q90 60 200 100 T420 80 V190 H0Z" fill="#8fd66a"/>
+      <path d="M0 140 Q120 95 230 130 T420 120 V190 H0Z" fill="#6cc24a"/>
+      <g fill="#ffd21f"><circle cx="40" cy="160" r="4"/><circle cx="380" cy="150" r="4"/><circle cx="330" cy="172" r="3"/></g>
+      <g fill="#fff"><circle cx="70" cy="174" r="3"/><circle cx="355" cy="166" r="3"/></g>
+    </svg>
+    <div class="burbuja" id="burbuja">¡Hmpf! ¡No faltes!</div>
+    <div class="cerdo-centro" data-cerdo><img id="imgCentro" src="img/cerdito-centro.svg" alt="Cerdito"></div>
+  </div>
+
+  <!-- ===== CONFIRMACIÓN ===== -->
+  <div class="rsvp-zona">
+    <div id="cuenta"></div>
+
+    <form class="rsvp" id="form" novalidate>
+      <h2>¡Confirma tu asistencia!</h2>
+      <p class="sub">Invitación personal · déjanos tu nombre y DNI 🎈</p>
+
+      <div id="invitados"></div>
+    
+      <a class="btn-wsp" id="enviar" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.3c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.9-3.9-1.9-6 0-5.9 5-10.7 11.1-10.7s11.1 4.8 11.1 10.7S22.1 26.3 16 26.3zm6.1-8c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1-2.5c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.9 1.1 3.4.9 4.1.8.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>
+        Confirmar por WhatsApp
+      </a>
+      <p class="nota" id="nota"></p>
+      <div class="gracias" id="gracias">¡Gracias! 🐷 Solo falta que presiones <b>Enviar</b> en WhatsApp.</div>
+    </form>
+
+    <p class="firma" id="firma">Con cariño, la familia de Sebas 💙</p>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   DATOS DE LA FIESTA — edita solo esta parte
+   ========================================================= */
+const FIESTA = {
+  nino:     "Sebas",
+  dia:      "SÁBADO",
+  numDia:   "19",
+  mes:      "DICIEMBRE",
+  hora:     "2:00",
+  ampm:     "PM",
+  lugar:    "Esteban Campodónico 383 - Santa Catalina",
+  mapaURL:  "https://www.google.com/maps/search/?api=1&query=Esteban+Campod%C3%B3nico+383+Santa+Catalina+La+Victoria+Lima",
+  fechaISO: "2026-12-19T14:00:00-05:00",  // para la cuenta regresiva (hora de Lima)
+  whatsapp: "51934017760",      // 51 = Perú + número
+
+  // IMÁGENES — sube tus archivos a la carpeta img/ y pon aquí su nombre
+  // (sirve .png, .jpg, .webp, .gif o .svg; mejor con fondo transparente)
+  imagenes: {
+    izquierda: "img/cerdito-izq.svg",     // arriba a la izquierda
+    derecha:   "img/cerdito-der.svg",     // arriba a la derecha
+    centro:    "img/cerdito-centro.svg",  // abajo, sobre el pasto
+  },
+};
+/* ========================================================= */
+
+const $ = s => document.querySelector(s);
+$('#nombreNino').textContent = FIESTA.nino;
+$('#dia').textContent = FIESTA.dia;
+$('#numDia').textContent = FIESTA.numDia;
+$('#mes').textContent = FIESTA.mes;
+$('#hora').textContent = FIESTA.hora;
+$('#ampm').textContent = FIESTA.ampm;
+$('#lugar').textContent = '📍 ' + FIESTA.lugar;
+$('#imgIzq').src = FIESTA.imagenes.izquierda;
+$('#imgDer').src = FIESTA.imagenes.derecha;
+$('#imgCentro').src = FIESTA.imagenes.centro;
+$('#firma').textContent = 'Con cariño, la familia de ' + FIESTA.nino + ' 💙';
+if (FIESTA.mapaURL) {
+  const a = document.createElement('a');
+  a.href = FIESTA.mapaURL; a.target = '_blank'; a.rel = 'noopener';
+  a.textContent = 'Ver en Google Maps';
+  $('#mapa').appendChild(a);
+}
+const numVisible = FIESTA.whatsapp.replace(/^51/, '').replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+$('#nota').innerHTML = 'Tu confirmación llegará por WhatsApp al:<span class="tel">📱 ' + numVisible + '</span>Si no se abre, escríbenos directamente a ese número.';
+
+/* ---------- confeti ---------- */
+const colores = ['#e8242c','#ffd21f','#2fb6ef','#5fc63a','#8b4fe0','#ff8a1f'];
+function confeti(n = 70) {
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement('div');
+    c.className = 'confeti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colores[Math.floor(Math.random() * colores.length)];
+    c.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    c.style.animationDuration = (1.8 + Math.random() * 1.8) + 's';
+    c.style.animationDelay = Math.random() * .5 + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ---------- cerditos: berrinche al tocarlos ---------- */
+const frases = ['¡Hmpf! ¡No faltes!', '¡Grrr! ¡Confirma ya!', '¡Oink! ¡Quiero torta!', '¡Hmpf! ¡Te espero!'];
+let fi = 0;
+function berrinche(el) { el.classList.remove('enojado'); void el.offsetWidth; el.classList.add('enojado'); setTimeout(() => el.classList.remove('enojado'), 1300); }
+document.querySelectorAll('[data-cerdo]').forEach(el => el.addEventListener('click', () => {
+  berrinche(el); fi = (fi + 1) % frases.length; $('#burbuja').textContent = frases[fi];
+}));
+
+/* ---------- cuenta regresiva ---------- */
+function tick() {
+  const diff = new Date(FIESTA.fechaISO) - new Date();
+  const el = $('#cuenta');
+  if (isNaN(diff)) { el.innerHTML = ''; return; }
+  if (diff <= 0) { el.innerHTML = diff > -8 * 3600e3 ? '<div class="cuenta-hoy">¡Hoy es la fiesta! 🎉</div>' : ''; return; }
+  const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+  el.innerHTML = '<div class="cuenta">' + [[d,'días'],[h,'horas'],[m,'min'],[s,'seg']].map(([v,t]) => `<div><b>${v}</b><span>${t}</span></div>`).join('') + '</div>';
+}
+tick(); setInterval(tick, 1000);
+
+/* ---------- invitados ---------- */
+const cont = $('#invitados');
+function nuevoInvitado() {
+  const n = cont.children.length + 1;
+  const d = document.createElement('div');
+  d.className = 'invitado';
+  d.innerHTML = `
+        <label>Nombre y apellido</label>
+    <input class="in-nombre" type="text" autocomplete="name" placeholder="Ej. María López">
+    <div class="msg-error e-nombre"></div>
+    <label>DNI</label>
+    <input class="in-dni" type="text" inputmode="numeric" maxlength="8" placeholder="8 dígitos">
+    <div class="msg-error e-dni"></div>`;
+  cont.appendChild(d);
+  d.querySelector('.in-dni').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 8); });
+  d.querySelectorAll('input').forEach(i => i.addEventListener('input', () => { i.classList.remove('error'); actualizarLink(); }));
+  return d;
+}
+nuevoInvitado();
+
+function leer() {
+  return [...cont.children].map(d => ({
+    el: d,
+    nombre: d.querySelector('.in-nombre').value.trim().replace(/\s+/g, ' '),
+    dni: d.querySelector('.in-dni').value.trim()
+  }));
+}
+function validar() {
+  let ok = true;
+  leer().forEach(p => {
+    const en = p.nombre.length < 3, ed = !/^\d{8}$/.test(p.dni);
+    if (en || ed) ok = false;
+    p.el.querySelector('.in-nombre').classList.toggle('error', en);
+    p.el.querySelector('.in-dni').classList.toggle('error', ed);
+    p.el.querySelector('.e-nombre').textContent = en ? 'Escribe tu nombre completo' : '';
+    p.el.querySelector('.e-dni').textContent = ed ? 'El DNI debe tener 8 números' : '';
+  });
+  return ok;
+}
+function mensajeWsp() {
+  const p = leer()[0];
+  return `🎉 ¡Confirmo mi asistencia al cumple de ${FIESTA.nino}! 🐷\n\nNombre: ${p.nombre}\nDNI: ${p.dni}`;
+}
+function actualizarLink() { $('#enviar').href = 'https://wa.me/' + FIESTA.whatsapp + '?text=' + encodeURIComponent(mensajeWsp()); }
+actualizarLink();
+
+$('#enviar').addEventListener('click', e => {
+  if (!validar()) {
+    e.preventDefault();
+    berrinche(document.querySelector('.cerdo-centro'));
+    $('#burbuja').textContent = '¡Grrr! Faltan tus datos';
+    return;
+  }
+  actualizarLink();
+  confeti();
+  $('#gracias').classList.add('ver');
+  $('#burbuja').textContent = '¡Oink! ¡Te espero! 💙';
+});
+$('#form').addEventListener('submit', e => e.preventDefault());
+</script>
+</body>
+</html>
