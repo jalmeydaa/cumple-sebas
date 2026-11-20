@@ -68,6 +68,8 @@
   /* imágenes editables: caja fija (proporción 200x254); la imagen se ajusta sin deformarse */
   .cerdo-lado img,.cerdo-centro img{display:block;width:100%;aspect-ratio:200/254;object-fit:contain;object-position:bottom;pointer-events:none;user-select:none}
   @keyframes saltito{50%{transform:translateY(-6px)}}
+  /* sin recuadro azul al tocar en celular */
+  [data-cerdo]{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;outline:none}
   .cerdo-lado.enojado,.cerdo-centro.enojado{animation:berrinche .4s ease-in-out 3}
   @keyframes berrinche{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
 
@@ -122,11 +124,14 @@
   .direccion a{color:var(--azul);font-weight:700}
 
   /* ---------- pasto + cerdito central ---------- */
-  .pasto-zona{position:relative;margin-top:52px}
-  .pasto-zona svg.colinas{width:100%;height:auto;display:block}
-  .cerdo-centro{position:absolute;left:50%;bottom:-50%;width:80%;margin-left:-40%;cursor:pointer;animation:saltito 2.2s ease-in-out infinite}
+  /* el cerdito va "en fila" entre el link de Maps y el conteo; las colinas quedan de fondo abajo.
+     Tamaño: cambia width. Cuánto se hunde en el pasto: cambia padding-bottom. */
+  .pasto-zona{position:relative;margin-top:10px;padding-bottom:12%}
+  .pasto-zona svg.colinas{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block}
+  .cerdo-centro{position:relative;display:block;width:52%;margin:0 auto;z-index:1;cursor:pointer;animation:saltito 2.2s ease-in-out infinite}
+  .cerdo-centro img{aspect-ratio:auto;height:auto}
   /* aviso de toque: manito con onda que se expande (desaparece al primer toque) */
-  .tocame{position:absolute;left:20%;top:55%;z-index:3;width:30px;height:30px;border-radius:50%;
+  .tocame{position:absolute;left:-12%;top:50%;z-index:3;width:30px;height:30px;border-radius:50%;
     background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:.95rem;
     animation:toque 1.6s ease-in-out infinite;transition:opacity .3s}
   .tocame::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #fff;animation:onda 1.6s ease-out infinite}
@@ -294,7 +299,7 @@
       <g fill="#fff"><circle cx="70" cy="174" r="3"/><circle cx="355" cy="166" r="3"/></g>
     </svg>
     <div class="burbuja" id="burbuja">¡Hmpf! ¡No faltes!</div>
-    <div class="cerdo-centro" data-cerdo><div class="tocame" aria-label="Toca al cerdito">👆</div><img id="imgCentro" src="img/cerdito-centro.png" width="200" height="254" alt="Cerdito"></div>
+    <div class="cerdo-centro" data-cerdo><div class="tocame" aria-label="Toca al cerdito">👆</div><img id="imgCentro" src="img/cerdito-centro.png" width="600" height="736" alt="Cerdito"></div>
   </div>
 
   <!-- ===== CONFIRMACIÓN ===== -->
