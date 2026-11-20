@@ -558,7 +558,20 @@ if (musica.readyState >= 1) irAlInicio(); else musica.addEventListener('loadedme
 musica.addEventListener('ended', () => { irAlInicio(); musica.play().catch(() => {}); });   // repetir desde "musicaInicio"
 musica.addEventListener('play',  () => { btnMusica.textContent = '🎵'; });
 musica.addEventListener('pause', () => { btnMusica.textContent = '🔇'; });
-btnMusica.addEventListener('click', () => { musica.paused ? musica.play().catch(() => {}) : musica.pause(); });
+let pausaManual = false, pausadaPorSalir = false;
+btnMusica.addEventListener('click', () => {
+  if (musica.paused) { pausaManual = false; musica.play().catch(() => {}); }
+  else { pausaManual = true; musica.pause(); }
+});
+// pausar al salir del navegador (otra app, minimizar, bloquear pantalla) y reanudar al volver
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (!musica.paused) { pausadaPorSalir = true; musica.pause(); }
+  } else if (pausadaPorSalir && !pausaManual) {
+    pausadaPorSalir = false; musica.play().catch(() => {});
+  }
+});
+window.addEventListener('pagehide', () => musica.pause());
 
 portada.addEventListener('click', () => {
   musica.volume = .6;
