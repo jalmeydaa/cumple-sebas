@@ -166,6 +166,7 @@
   .gracias.ver{display:block}
   .firma{text-align:center;color:#fff;font-weight:700;margin-top:18px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 
+  .serpentinas{position:fixed;inset:0;width:100%;height:100%;z-index:10;pointer-events:none}
   .confeti{position:fixed;top:-12px;width:10px;height:14px;z-index:9;pointer-events:none;animation:caer linear forwards}
   @keyframes caer{to{transform:translateY(110vh) rotate(720deg)}}
 
@@ -261,7 +262,7 @@
   <!-- ===== FECHA Y HORA ===== -->
   <div class="fecha-zona">
     <svg class="globos izq" viewBox="0 0 100 230"><use href="#racimo"/></svg>
-    <svg class="globos der" viewBox="0 0 100 230" style="transform:scaleX(-1)"><use href="#racimo"/></svg>
+    <svg class="globos der" viewBox="0 0 100 230"><use href="#racimo"/></svg>
 
     <div class="fecha-hora">
       <div class="fh">
@@ -395,6 +396,68 @@ function tick() {
   el.innerHTML = '<div class="cuenta">' + [[d,'días'],[h,'horas'],[m,'min'],[s,'seg']].map(([v,t]) => `<div><b>${v}</b><span>${t}</span></div>`).join('') + '</div>';
 }
 tick(); setInterval(tick, 1000);
+
+/* ---------- serpentinas: explotan desde las esquinas 1.5 s después de cargar ---------- */
+function serpentinas() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = document.createElement('canvas');
+  cv.className = 'serpentinas';
+  document.body.appendChild(cv);
+  const ctx = cv.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
+
+  const G = 0.32, piezas = [];
+  const lanzar = (x, y, lado, esSerp) => {
+    const ang = (-90 - lado * (12 + Math.random() * 32)) * Math.PI / 180;   // hacia el centro y arriba
+    const v = Math.sqrt(2 * G * H * (0.55 + Math.random() * 0.4)) * (esSerp ? 1.25 : 1.15);
+    piezas.push({
+      x, y, vx: Math.cos(ang) * v, vy: Math.sin(ang) * v, serp: esSerp,
+      color: colores[Math.floor(Math.random() * colores.length)],
+      rastro: [], fase: Math.random() * 6, giro: Math.random() * 6, vgiro: (Math.random() - .5) * .4,
+      ancho: esSerp ? 2.5 + Math.random() * 1.5 : 6 + Math.random() * 4,
+    });
+  };
+  for (const lado of [-1, 1]) {            // -1 = esquina izquierda, 1 = derecha
+    const x0 = lado < 0 ? 0 : W;
+    for (let i = 0; i < 14; i++) lanzar(x0, H, lado, true);
+    for (let i = 0; i < 45; i++) lanzar(x0, H, lado, false);
+  }
+
+  let t = 0;
+  (function cuadro() {
+    t++;
+    ctx.clearRect(0, 0, W, H);
+    let vivas = 0;
+    for (const p of piezas) {
+      const roce = p.serp ? 0.975 : 0.965;
+      p.vx *= roce; p.vy = p.vy * roce + G * (p.serp ? 0.55 : 0.5);
+      p.x += p.vx + (p.vy > 0 ? Math.sin(t * .08 + p.fase) * .8 : 0);   // vaivén al caer
+      p.y += p.vy;
+      if (p.y < H + 60) vivas++;
+      if (p.serp) {
+        p.rastro.push([p.x, p.y]);
+        if (p.rastro.length > 22) p.rastro.shift();
+        ctx.beginPath();
+        p.rastro.forEach(([x, y], i) => {
+          const r = Math.sin(i * .9 + p.fase + t * .25) * 5;         // rizo de la cinta
+          i ? ctx.lineTo(x + r, y) : ctx.moveTo(x + r, y);
+        });
+        ctx.strokeStyle = p.color; ctx.lineWidth = p.ancho; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.stroke();
+      } else {
+        p.giro += p.vgiro;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.giro);
+        ctx.scale(1, Math.cos(t * .15 + p.fase));                       // efecto de papelito que voltea
+        ctx.fillStyle = p.color; ctx.fillRect(-p.ancho / 2, -p.ancho / 3, p.ancho, p.ancho / 1.5);
+        ctx.restore();
+      }
+    }
+    if (vivas && t < 420) requestAnimationFrame(cuadro); else cv.remove();
+  })();
+}
+window.addEventListener('load', () => setTimeout(serpentinas, 1500));
 
 /* ---------- invitados ---------- */
 const cont = $('#invitados');
