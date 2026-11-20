@@ -287,7 +287,7 @@
   </div>
 
   <!-- ===== NOMBRE Y TEXTO ===== -->
-  <h1 class="nombre" id="nombreNino">Sebas</h1>
+  <h1 class="nombre" id="nombreNino">Owen<br>Sebastián</h1>
   <p class="texto" id="mensaje">Acompaña a mis papitos y a mí a celebrar mi primer añito el día:</p>
 
   <!-- ===== FECHA Y HORA ===== -->
@@ -382,7 +382,8 @@
    DATOS DE LA FIESTA — edita solo esta parte
    ========================================================= */
 const FIESTA = {
-  nino:     "Sebas",
+  nino:     "Sebas",                    // se usa en la firma y en el mensaje de WhatsApp
+  nombreGrande: ["Owen", "Sebastián"],  // nombre grande del encabezado, una línea por cada uno
   dia:      "SÁBADO",
   numDia:   "19",
   mes:      "DICIEMBRE",
@@ -396,7 +397,7 @@ const FIESTA = {
 /* ========================================================= */
 
 const $ = s => document.querySelector(s);
-$('#nombreNino').textContent = FIESTA.nino;
+$('#nombreNino').innerHTML = FIESTA.nombreGrande.map(t => t.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])).join('<br>');
 $('#dia').textContent = FIESTA.dia;
 $('#numDia').textContent = FIESTA.numDia;
 $('#mes').textContent = FIESTA.mes;
