@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¡Sebas cumple 1 añito!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- imágenes de los cerditos: se precargan para que aparezcan sin demora -->
+<link rel="preload" as="image" href="img/cerdito-izq.png">
+<link rel="preload" as="image" href="img/cerdito-der.png">
+<link rel="preload" as="image" href="img/cerdito-centro.png">
 <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Dancing+Script:wght@700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   /* =========================================================
@@ -251,8 +255,8 @@
         <circle cx="328" cy="300" r="26"/><circle cx="365" cy="285" r="34"/><circle cx="400" cy="296" r="30"/><rect x="310" y="296" width="120" height="34" rx="16"/>
       </g>
     </svg>
-    <div class="cerdo-lado izq" data-cerdo><img id="imgIzq" src="img/cerdito-izq.svg" alt="Cerdito"></div>
-    <div class="cerdo-lado der" data-cerdo><img id="imgDer" src="img/cerdito-der.svg" alt="Cerdito"></div>
+    <div class="cerdo-lado izq" data-cerdo><img id="imgIzq" src="img/cerdito-izq.png" width="200" height="254" alt="Cerdito"></div>
+    <div class="cerdo-lado der" data-cerdo><img id="imgDer" src="img/cerdito-der.png" width="200" height="254" alt="Cerdito"></div>
   </div>
 
   <!-- ===== NOMBRE Y TEXTO ===== -->
@@ -290,7 +294,7 @@
       <g fill="#fff"><circle cx="70" cy="174" r="3"/><circle cx="355" cy="166" r="3"/></g>
     </svg>
     <div class="burbuja" id="burbuja">¡Hmpf! ¡No faltes!</div>
-    <div class="cerdo-centro" data-cerdo><div class="tocame" aria-label="Toca al cerdito">👆</div><img id="imgCentro" src="img/cerdito-centro.svg" alt="Cerdito"></div>
+    <div class="cerdo-centro" data-cerdo><div class="tocame" aria-label="Toca al cerdito">👆</div><img id="imgCentro" src="img/cerdito-centro.png" width="200" height="254" alt="Cerdito"></div>
   </div>
 
   <!-- ===== CONFIRMACIÓN ===== -->
@@ -330,14 +334,6 @@ const FIESTA = {
   mapaURL:  "https://www.google.com/maps/search/?api=1&query=Esteban+Campod%C3%B3nico+383+Santa+Catalina+La+Victoria+Lima",
   fechaISO: "2026-12-19T14:00:00-05:00",  // para la cuenta regresiva (hora de Lima)
   whatsapp: "51934017760",      // 51 = Perú + número
-
-  // IMÁGENES — sube tus archivos a la carpeta img/ y pon aquí su nombre
-  // (sirve .png, .jpg, .webp, .gif o .svg; mejor con fondo transparente)
-  imagenes: {
-    izquierda: "img/cerdito-izq.png",     // arriba a la izquierda
-    derecha:   "img/cerdito-der.png",     // arriba a la derecha
-    centro:    "img/cerdito-centro.png",  // abajo, sobre el pasto
-  },
 };
 /* ========================================================= */
 
@@ -349,9 +345,6 @@ $('#mes').textContent = FIESTA.mes;
 $('#hora').textContent = FIESTA.hora;
 $('#ampm').textContent = FIESTA.ampm;
 $('#lugar').textContent = '📍 ' + FIESTA.lugar;
-$('#imgIzq').src = FIESTA.imagenes.izquierda;
-$('#imgDer').src = FIESTA.imagenes.derecha;
-$('#imgCentro').src = FIESTA.imagenes.centro;
 $('#firma').textContent = 'Con cariño, la Familia del Gran ' + FIESTA.nino + ' 💙';
 if (FIESTA.mapaURL) {
   const a = document.createElement('a');
