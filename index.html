@@ -155,24 +155,46 @@
   .cuenta-hoy{text-align:center;font-family:'Lilita One';font-size:1.5rem;color:#fff;padding:4px 0 14px;text-shadow:0 2px 0 var(--verde-osc)}
 
   .rsvp{background:#fff;border-radius:24px;padding:18px 16px 20px;box-shadow:0 6px 0 rgba(0,0,0,.12)}
-  .rsvp h2{font-family:'Lilita One',sans-serif;font-weight:400;text-align:center;font-size:1.9rem;line-height:1.05;color:var(--azul-osc)}
-  .rsvp .sub{text-align:center;font-size:.95rem;color:#5b6b8f;margin:4px 0 12px}
-  .invitado{background:#f3faff;border-radius:16px;padding:4px 12px 12px;margin-bottom:14px!important;border:2px solid #d4ecff;margin-bottom:10px;position:relative}
+  .rsvp h2{font-family:'Lilita One',sans-serif;font-weight:400;text-align:center;font-size:1.75rem;line-height:1.1;color:var(--azul)}
+  .rsvp .sub{text-align:center;font-size:.95rem;color:#3f4d6e;margin:6px 0 10px}
+  .invitado{margin-bottom:18px;position:relative}
   .invitado .num{font-weight:700;color:var(--azul);font-size:.9rem}
   .quitar{position:absolute;top:8px;right:10px;border:none;background:#ffe1e3;color:var(--rojo);font-weight:800;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:1rem}
-  label{display:block;font-weight:600;font-size:.9rem;margin:8px 0 4px}
-  input{width:100%;font:inherit;font-size:1rem;padding:12px 14px;border-radius:14px;border:2px solid #cfe3f5;background:#fff;outline:none}
-  input:focus{border-color:var(--azul)}
+  label{display:block;font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:#3f4d6e;margin:12px 0 6px 4px}
+  input{width:100%;font:inherit;font-size:1rem;color:var(--azul-osc);padding:13px 14px;border-radius:14px;border:2px solid transparent;background:#eef4fb;outline:none;transition:background .2s,border-color .2s}
+  input::placeholder{color:#8a97b3}
+  input:focus{border-color:var(--azul);background:#fff}
   input.error{border-color:var(--rojo);background:#fff3f3}
   .msg-error{color:var(--rojo);font-size:.82rem;font-weight:600;margin-top:3px}
   .agregar{display:block;width:100%;border:2px dashed var(--azul);background:transparent;color:var(--azul);font:inherit;font-weight:700;padding:10px;border-radius:14px;cursor:pointer;margin:2px 0 14px}
-  .btn-wsp{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;background:#25d366;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.3rem;padding:14px;border-radius:18px;box-shadow:0 6px 0 #179c4a}
-  .btn-wsp:active{transform:translateY(4px);box-shadow:0 2px 0 #179c4a}
+  .btn-wsp{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;background:#25d366;color:#fff;font-family:'Lilita One',sans-serif;font-size:1.2rem;padding:14px;border-radius:16px;box-shadow:0 6px 16px rgba(37,211,102,.3);-webkit-tap-highlight-color:transparent;transition:transform .1s}
+  .btn-wsp:active{transform:scale(.98)}
   .btn-wsp svg{width:26px;height:26px}
-  .nota{font-size:.8rem;color:#5b6b8f;text-align:center;margin-top:10px;line-height:1.4}
+  .nota{font-size:.8rem;color:#3f4d6e;text-align:center;margin-top:10px;line-height:1.4}
   .nota .tel{display:block;font-family:'Lilita One',sans-serif;font-size:1.35rem;color:var(--azul-osc);margin:4px 0 6px;letter-spacing:.03em}
   .gracias{display:none;text-align:center;margin-top:12px;background:#eafff1;border-radius:16px;padding:12px;font-weight:600;color:#178a43}
   .gracias.ver{display:block}
+  /* ---------- guía de regalos ---------- */
+  .regalos{background:#fff;border-radius:24px;padding:20px 16px;margin-bottom:18px;box-shadow:0 6px 0 rgba(0,0,0,.12);text-align:center}
+  .regalos .pill{display:inline-block;background:#ffe4ec;color:#d6336c;font-weight:700;font-size:.78rem;letter-spacing:.06em;
+    text-transform:uppercase;padding:5px 12px;border-radius:999px}
+  .regalos h2{font-family:'Lilita One',sans-serif;font-weight:400;font-size:1.75rem;line-height:1.1;color:var(--azul);margin:8px 0 10px}
+  .presencia{font-family:'Lilita One',sans-serif;font-size:1.3rem;line-height:1.2;color:var(--azul-osc)}
+  .regalos .sub{font-size:.95rem;color:#3f4d6e;line-height:1.4;margin:8px 4px 18px}
+  .tallas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+  .talla{border-radius:18px;padding:14px 8px}
+  .talla.ropa{background:#e8f2ff}
+  .talla.zapato{background:#fff4d6}
+  .talla .ico{font-size:1.9rem;line-height:1}
+  .talla b{display:block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+  .talla.ropa b{color:#1e40af}.talla.zapato b{color:#92400e}
+  .talla .val{font-family:'Lilita One',sans-serif;font-size:1.4rem;color:var(--azul-osc);line-height:1.1;margin-top:2px}
+  .talla .nota-t{display:block;font-size:.78rem;font-weight:600;margin-top:3px;color:#92400e}
+  .favoritos{text-align:left}
+  .favoritos h3{font-family:'Lilita One',sans-serif;font-weight:400;font-size:1.2rem;color:var(--azul-osc);text-align:center}
+  .favoritos p{font-size:.85rem;color:#3f4d6e;text-align:center;margin:2px 0 8px}
+  .fav{display:flex;align-items:center;gap:12px;padding:6px 4px;font-weight:600;font-size:.95rem;color:var(--azul-osc)}
+  .fav span{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
   .firma{text-align:center;color:#fff;font-weight:700;margin-top:18px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 
   .serpentinas{position:fixed;inset:0;width:100%;height:100%;z-index:10;pointer-events:none}
@@ -305,6 +327,37 @@
   <!-- ===== CONFIRMACIÓN ===== -->
   <div class="rsvp-zona">
     <div id="cuenta"></div>
+
+    <!-- ===== GUÍA DE REGALOS (edita los textos aquí) ===== -->
+    <section class="regalos">
+      <span class="pill">🎁 Sugerencias con cariño</span>
+      <h2>Guía de regalos para Sebas</h2>
+      <p class="presencia">Tu presencia es nuestro mejor&nbsp;regalo&nbsp;💙</p>
+      <p class="sub">Lo más importante para nosotros es que estés ahí celebrando con Sebas. Pero si deseas tener un detallito con él, aquí tienes sus tallas y cositas favoritas:</p>
+
+      <div class="tallas">
+        <div class="talla ropa">
+          <span class="ico">👕</span>
+          <b>Talla de ropa</b>
+          <div class="val">18 meses a más</div>
+        </div>
+        <div class="talla zapato">
+          <span class="ico">👟</span>
+          <b>Calzado</b>
+          <div class="val">14 cm</div>
+          <span class="nota-t">Plantilla interna</span>
+        </div>
+      </div>
+
+      <div class="favoritos">
+        <h3>⭐ Sus juguetes favoritos</h3>
+        <p>¡Las cositas que más le divierten!</p>
+        <div class="fav"><span style="background:#ffe4ec">📚</span>Libros con colores y sonidos</div>
+        <div class="fav"><span style="background:#e0f2fe">💦</span>Juguetes con o para agua</div>
+        <div class="fav"><span style="background:#ede9fe">🧩</span>Juguetes interactivos</div>
+        <div class="fav"><span style="background:#fef3c7">🏖️</span>Juegos de playa</div>
+      </div>
+    </section>
 
     <form class="rsvp" id="form" novalidate>
       <h2>¡Confirma tu asistencia!</h2>
