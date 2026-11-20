@@ -208,6 +208,24 @@
   .fav span{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
   .firma{text-align:center;color:#fff;font-weight:700;margin-top:18px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
 
+  /* ---------- portada "toca para abrir" ---------- */
+  .portada{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    padding:24px;text-align:center;cursor:pointer;background:linear-gradient(180deg,var(--cielo-arriba),var(--cielo-abajo));
+    transition:opacity .6s ease,transform .6s ease;-webkit-tap-highlight-color:transparent}
+  .portada.abierta{opacity:0;transform:scale(1.08);pointer-events:none}
+  .portada img{width:min(48vw,200px);height:auto;animation:saltito 2.2s ease-in-out infinite;margin-bottom:6px}
+  .portada .p-sub{font-family:'Lilita One',sans-serif;font-size:1.15rem;color:var(--azul-osc)}
+  .portada .p-nombre{font-family:'Dancing Script',cursive;font-size:clamp(2.4rem,12vw,3.2rem);line-height:1;color:var(--azul);
+    text-shadow:3px 3px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff}
+  .portada button{margin-top:14px;font-family:'Lilita One',sans-serif;font-size:1.25rem;color:#fff;background:var(--azul);border:none;
+    border-radius:999px;padding:14px 28px;box-shadow:0 6px 16px rgba(30,123,224,.35);cursor:pointer;animation:pulso 1.4s ease-in-out infinite}
+  @keyframes pulso{50%{transform:scale(1.06)}}
+  body.bloqueado{overflow:hidden}
+  /* botón pequeño para pausar la música */
+  .btn-musica{position:fixed;right:14px;bottom:14px;z-index:11;width:42px;height:42px;border:none;border-radius:50%;
+    background:rgba(255,255,255,.92);box-shadow:0 3px 10px rgba(23,58,122,.25);font-size:1.15rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+  .btn-musica[hidden]{display:none}
   .serpentinas{position:fixed;inset:0;width:100%;height:100%;z-index:10;pointer-events:none}
   .confeti{position:fixed;top:-12px;width:10px;height:14px;z-index:9;pointer-events:none;animation:caer linear forwards}
   @keyframes caer{to{transform:translateY(110vh) rotate(720deg)}}
@@ -223,7 +241,17 @@
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
-<body>
+<body class="bloqueado">
+
+<!-- ===== PORTADA: al tocarla se abre la invitación y empieza la música ===== -->
+<div class="portada" id="portada" role="button" aria-label="Abrir invitación">
+  <img src="img/cerdito-centro.png" width="600" height="736" alt="">
+  <div class="p-sub">¡Tienes una invitación!</div>
+  <div class="p-nombre">Owen Sebastián</div>
+  <button type="button">🎁 Toca para abrir</button>
+</div>
+<audio id="musica" src="musica.m4a" preload="auto"></audio>
+<button class="btn-musica" id="btnMusica" type="button" aria-label="Pausar o reanudar música" hidden>🎵</button>
 
 <!-- ===== Dibujos reutilizables (globos) ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -404,6 +432,7 @@ const FIESTA = {
   mapaURL:  "https://www.google.com/maps/search/?api=1&query=Esteban+Campod%C3%B3nico+383+Santa+Catalina+La+Victoria+Lima",
   fechaISO: "2026-12-19T14:00:00-05:00",  // para la cuenta regresiva (hora de Lima)
   whatsapp: "51934017760",      // 51 = Perú + número
+  musicaInicio: 11,              // segundo desde el que empieza la música (y al que vuelve al repetirse)
 };
 /* ========================================================= */
 
@@ -520,7 +549,27 @@ function serpentinas() {
     if (vivas && t < 420) requestAnimationFrame(cuadro); else cv.remove();
   })();
 }
-window.addEventListener('load', () => setTimeout(serpentinas, 1500));
+
+/* ---------- portada + música ---------- */
+const portada = $('#portada'), musica = $('#musica'), btnMusica = $('#btnMusica');
+const inicio = Number(FIESTA.musicaInicio) || 0;
+function irAlInicio() { try { musica.currentTime = inicio; } catch (e) {} }
+if (musica.readyState >= 1) irAlInicio(); else musica.addEventListener('loadedmetadata', irAlInicio, { once: true });
+musica.addEventListener('ended', () => { irAlInicio(); musica.play().catch(() => {}); });   // repetir desde "musicaInicio"
+musica.addEventListener('play',  () => { btnMusica.textContent = '🎵'; });
+musica.addEventListener('pause', () => { btnMusica.textContent = '🔇'; });
+btnMusica.addEventListener('click', () => { musica.paused ? musica.play().catch(() => {}) : musica.pause(); });
+
+portada.addEventListener('click', () => {
+  musica.volume = .6;
+  if (musica.readyState >= 1 && musica.currentTime < inicio) irAlInicio();
+  musica.play().catch(() => {});          // el toque en la portada es lo que permite que suene
+  portada.classList.add('abierta');
+  document.body.classList.remove('bloqueado');
+  btnMusica.hidden = false;
+  setTimeout(serpentinas, 350);
+  setTimeout(() => portada.remove(), 700);
+}, { once: true });
 
 /* ---------- invitados ---------- */
 const cont = $('#invitados');
